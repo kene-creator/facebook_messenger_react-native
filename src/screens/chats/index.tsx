@@ -1,8 +1,11 @@
 /* eslint-disable react/react-in-jsx-scope */
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {Avatar} from 'react-native-paper';
+import {useNavigate} from 'react-router-native';
 
 function ChatsScreen() {
+  const navigate = useNavigate();
+
   const friends = [
     {id: 1, name: 'John'},
     {id: 2, name: 'Doe'},
@@ -12,7 +15,9 @@ function ChatsScreen() {
   return (
     <View style={styles.container}>
       {friends.map(friend => (
-        <Pressable key={friend.id} onPress={() => {}}>
+        <Pressable
+          key={friend.id}
+          onPress={() => navigate(`/chat/${friend.id}`)}>
           <View style={styles.friends}>
             <Avatar.Image
               size={72}

@@ -12,8 +12,9 @@ import {
   Provider as PaperProvider,
   Text,
 } from 'react-native-paper';
+import ChatsScreen from './src/screens/chats';
 
-const MusicRoute = () => <Text>Musiiic</Text>;
+const chatscreens = () => <ChatsScreen />;
 
 const AlbumsRoute = () => <Text>Albums</Text>;
 
@@ -21,31 +22,31 @@ const RecentsRoute = () => <Text>Recents</Text>;
 
 const NotificationsRoute = () => <Text>Notifications</Text>;
 
+interface NavRoutes {
+  key: string;
+  title: string;
+  focusedIcon: string;
+}
+
 function App(): JSX.Element {
   const [index, setIndex] = useState(0);
 
-  const [routes] = useState([
+  const [routes] = useState<NavRoutes[]>([
     {
-      key: 'music',
-      title: 'Favorites',
-      focusedIcon: 'heart',
-      unfocusedIcon: 'heart-outline',
+      key: 'chat',
+      title: 'Chats',
+      focusedIcon: 'chat',
     },
-    {key: 'albums', title: 'Albums', focusedIcon: 'album'},
-    {key: 'recents', title: 'Recents', focusedIcon: 'history'},
-    {
-      key: 'notifications',
-      title: 'Notifications',
-      focusedIcon: 'bell',
-      unfocusedIcon: 'bell-outline',
-    },
+    {key: 'calls', title: 'Calls', focusedIcon: 'video'},
+    {key: 'people', title: 'People', focusedIcon: 'account'},
+    {key: 'stories', title: 'Stroies', focusedIcon: 'book'},
   ]);
 
   const renderScene = Screens.SceneMap({
-    music: MusicRoute,
-    albums: AlbumsRoute,
-    recents: RecentsRoute,
-    notifications: NotificationsRoute,
+    chat: chatscreens,
+    calls: AlbumsRoute,
+    people: RecentsRoute,
+    stories: NotificationsRoute,
   });
 
   return (

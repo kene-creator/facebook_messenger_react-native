@@ -1,9 +1,25 @@
-/* eslint-disable react/react-in-jsx-scope */
+import {useContext} from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
-import {Avatar} from 'react-native-paper';
+import {Avatar, Button} from 'react-native-paper';
 import {useNavigate} from 'react-router-native';
+import {AuthContext} from '../../shared/auth/contexts/auth.context';
+import {useQuery} from 'react-query';
+import {baseURL, get} from '../../shared/request';
 
 function ChatsScreen() {
+  const {jwt, onLogout} = useContext(AuthContext);
+
+  useQuery(
+    'presence',
+    async () => {
+      const {data: presence} = await get(baseURL + '/presence');
+      return presence;
+    },
+    {
+      enabled: !!jwt,
+    },
+  );
+
   const navigate = useNavigate();
 
   const friends = [
@@ -33,6 +49,8 @@ function ChatsScreen() {
           </View>
         </Pressable>
       ))}
+
+      <Button onPress={onLogout}>Sign Out</Button>
     </View>
   );
 }

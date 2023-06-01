@@ -1,5 +1,5 @@
 import {UserDetails} from '../../auth/models';
 
-export interface ActiveFriends extends UserDetails {
+export interface ActiveFriend extends UserDetails {
   isActive: boolean;
 }

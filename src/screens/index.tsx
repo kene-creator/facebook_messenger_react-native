@@ -9,6 +9,7 @@ import {useContext, useState} from 'react';
 import {AuthContext} from '../shared/auth/contexts/auth.context';
 import {navRoutes} from '../shared/constants/navRoutes';
 import ChatScreen from './chat';
+import {COLOR_FB_PRIMARY} from '../shared/constants/colors';
 
 const Screens = () => {
   const {isLoggedIn} = useContext(AuthContext);
@@ -22,6 +23,7 @@ const Screens = () => {
     people: () => <Text>People</Text>,
     stories: () => <Text>Stories</Text>,
   });
+
   return (
     <NativeRouter>
       {isLoggedIn ? (
@@ -30,6 +32,7 @@ const Screens = () => {
             path="/"
             element={
               <NavScreens
+                style={{backgroundColor: COLOR_FB_PRIMARY}}
                 navigationState={{index, routes}}
                 onIndexChange={setIndex}
                 renderScene={renderScene}

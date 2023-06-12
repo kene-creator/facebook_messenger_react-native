@@ -16,23 +16,28 @@ import {useQuery} from 'react-query';
 import {getFriendRequests} from '../../../screens/people/request';
 import getFriends from '../helpers/friends';
 import {UserDetails} from '../../auth/models';
+import {Conversation} from '../../../screens/chat/models/Conversation';
+import {Message} from '../../../screens/chat/models/Message';
 
 export interface IFriendsContext {
   friends: ActiveFriend[];
   isLoading: boolean;
-  // setFriend: (friend: ActiveFriend) => void;
+  friend: ActiveFriend;
+  conversations: Conversation[];
+  messages: Message[];
+  setFriend: (friend: ActiveFriend) => void;
 }
 
 export const FriendsContext = createContext<IFriendsContext>({
   friends: [],
-  //   friend: {} as ActiveFriend,
   isLoading: false,
-  //   conversations: [],
-  //   messages: [],
+  friend: {} as ActiveFriend,
+  conversations: [],
+  messages: [],
   //   callDetails: null,
   //   callActivity: CallActivity.None,
   //   sendMessage: () => null,
-  // setFriend: () => null,
+  setFriend: () => null,
   //   setCallDetails: () => null,
   //   setCallActivity: () => null,
   //   startCall: () => null,
@@ -43,6 +48,7 @@ export const FriendProvider = ({children}: {children: ReactNode}) => {
   const {isActive, jwt, isLoggedIn, userDetails} = useContext(AuthContext);
 
   const [friends, setFriends] = useState<ActiveFriend[]>([]);
+  const [friend, setFriend] = useState<ActiveFriend>({} as ActiveFriend);
   const [isLoading, setIsLoading] = useState(false);
 
   useQuery(
@@ -121,7 +127,7 @@ export const FriendProvider = ({children}: {children: ReactNode}) => {
   }, [socket, isActive, userDetails]);
 
   return (
-    <FriendsContext.Provider value={{friends, isLoading}}>
+    <FriendsContext.Provider value={{friends, isLoading, friend, setFriend}}>
       {children}
     </FriendsContext.Provider>
   );
